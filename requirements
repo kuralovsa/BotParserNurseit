@@ -1,6 +1,7 @@
 joblib=1.1.0
 jsonschema=4.1.2
 aiogram=2.19
+asyncio
 json
 logging
 config
