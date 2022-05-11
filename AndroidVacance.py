@@ -9,9 +9,12 @@ import os
 def parse(area:int):
         params = {
                 'text': 'Android development', # Текст фильтра. В имени должно быть слово "Аналитик"
-                'area': area, # Поиск ощуществляется по вакансиям города Москва
-                'name': 'Android development',
+                'area': area, # Поиск ощуществляется по вакансиям города area
+                'only_with_salary' : 'true',
+                'professional_role' : '96',
                 'currency': 'KZT',
+                'schedule': 'fullDay',
+                'employment': 'full',
                 'locale': 'KZ',
                 'language': 'kz',
                 'host': 'hh.kz',

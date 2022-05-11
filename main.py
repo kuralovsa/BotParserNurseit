@@ -22,12 +22,34 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=['start'])
 async def welcomeMessages(message: types.Message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton('Web -Бағдарламалау')
-    item2 = types.KeyboardButton('Android -Бағдарламалау')
-    item3 = types.KeyboardButton('IOS -Бағдарламалау')
-    markup.add(item1, item2, item3)
+    item1 = types.KeyboardButton('Хабарландыруларды қарау')
+    item2 = types.KeyboardButton('Парсинг')
+    markup.add(item1, item2)
     await message.answer("Cәлем {0.first_name}\n Сенің телеграм бот асистентің!".format(message.from_user),
                          reply_markup=markup)
+
+
+@dp.message_handler(content_types=['text'])
+async def bot_Messages(message: types.Message):
+    if message.text == "Хабарландыруларды қарау":
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        item1 = types.KeyboardButton('Web -Бағдарламалау')
+        item2 = types.KeyboardButton('Android -Бағдарламалау')
+        item3 = types.KeyboardButton('IOS -Бағдарламалау')
+        markup.add(item1, item2, item3)
+        await message.answer("Cәлем {0.first_name}\n Сенің телеграм бот асистентің!".format(message.from_user),
+                             reply_markup=markup)
+    elif message == "Парсинг":
+        photo = open('parser.png', 'rb')
+        await message.answer_photo(photo)
+        inline_btn_1 = InlineKeyboardButton('Нұр-Сұлтан қаласы', callback_data='159p')
+        inline_btn_2 = InlineKeyboardButton('Алматы қаласы', callback_data='160p')
+        inline_btn_3 = InlineKeyboardButton('Шымкент қаласы', callback_data='205p')
+        back = InlineKeyboardButton('⬅ Back', callback_data='⬅ Back')
+        inline_kb1 = InlineKeyboardMarkup().add(inline_btn_1, inline_btn_2, inline_btn_3, back)
+        await message.answer("Қаланы көрсетіңіз", reply_markup=inline_kb1)
+
+
 
 
 @dp.message_handler(commands=['about'])
@@ -238,7 +260,36 @@ async def process_callback_btn(callback_query: types.CallbackQuery):
         jsonObj = json.loads(jsonText)
         for v in jsonObj['items']:
             await bot.send_message(callback_query.message.chat.id, v['alternate_url'], parse_mode='html')
-
+    elif callback_query.data == '159p':
+        await bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
+        await bot.send_message(callback_query.message.chat.id, "Нұр-Сұлтан қаласы")
+        todaysVacacies.parse(int(callback_query.data[:-1]))
+        f = open('Top10.json', encoding='utf8')
+        jsonText = f.read()
+        f.close()
+        jsonObj = json.loads(jsonText)
+        for v in jsonObj['items']:
+            await bot.send_message(callback_query.message.chat.id, v['alternate_url'], parse_mode='html')
+    elif callback_query.data == '205p':
+        await bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
+        await bot.send_message(callback_query.message.chat.id, "Шымкент қаласы")
+        todaysVacacies.parse(int(callback_query.data[:-1]))
+        f = open('Top10.json', encoding='utf8')
+        jsonText = f.read()
+        f.close()
+        jsonObj = json.loads(jsonText)
+        for v in jsonObj['items']:
+            await bot.send_message(callback_query.message.chat.id, v['alternate_url'], parse_mode='html')
+    elif callback_query.data == '160p':
+        await bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
+        await bot.send_message(callback_query.message.chat.id, "Алматы қаласы")
+        todaysVacacies.parse(int(callback_query.data[:-1]))
+        f = open('Top10.json', encoding='utf8')
+        jsonText = f.read()
+        f.close()
+        jsonObj = json.loads(jsonText)
+        for v in jsonObj['items']:
+            await bot.send_message(callback_query.message.chat.id, v['alternate_url'], parse_mode='html')
         # inline_btn_1 = InlineKeyboardButton('Front-end dev!', callback_data='Front-end dev!') ,reply_markup=markup
         # inline_btn_2 = InlineKeyboardButton('Back-end dev!', callback_data='Back-end dev!')
         # inline_btn_3 = InlineKeyboardButton('Full-stack dev!', callback_data='Full-stack dev!')
