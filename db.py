@@ -47,31 +47,34 @@ class BotDB:
     def set_city(self, user_name, city):
         """Set city in my search qwery"""
         result = self.cursor.execute("UPDATE resume SET city = ? WHERE firs_name = ?", (city, user_name,))
-        return bool(len(result.fetchall()))
+        return self.conn.commit()
 
     def set_spesiolization(self, user_name, spesiolization):
         """Set spesiolization in my search qwery"""
         result = self.cursor.execute("UPDATE resume SET spesiolization = ? WHERE firs_name = ?", (spesiolization, user_name,))
-        return bool(len(result.fetchall()))
+        return self.conn.commit()
 
     def set_salary(self, user_name, salary):
         """Set salary in my search qwery"""
         result = self.cursor.execute("UPDATE resume SET salary = ? WHERE firs_name = ?", (salary, user_name,))
-        return bool(len(result.fetchall()))
+        return self.conn.commit()
 
     def set_experience(self, user_name, experience):
         """Set experience in my search qwery"""
         result = self.cursor.execute("UPDATE resume SET experience = ? WHERE firs_name = ?", (experience, user_name,))
-        return bool(len(result.fetchall()))
+        return self.conn.commit()
+
 
     def set_employment(self, user_name, employment):
         """Set employment in my search qwery"""
         result = self.cursor.execute("UPDATE resume SET employment = ? WHERE firs_name = ?", (employment, user_name,))
-        return bool(len(result.fetchall()))
+        return self.conn.commit()
+
     def set_schedule(self, user_name, schedule):
         """Set schedule in my search qwery"""
         result = self.cursor.execute("UPDATE resume SET schedule = ? WHERE firs_name = ?", (schedule, user_name,))
-        return bool(len(result.fetchall()))
+        return self.conn.commit()
+
 
     def close(self):
         """Close the connection with DB"""

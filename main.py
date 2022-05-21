@@ -139,6 +139,19 @@ async def vacancies(message: types.Message):
     inline_kb1 = InlineKeyboardMarkup().add(inline_btn_1, inline_btn_2, inline_btn_3, back)
     await message.answer("Күннің 10 үздік ұсынысы!", reply_markup=inline_kb1)
 
+inline_btn_1 = InlineKeyboardButton('Нұр-Сұлтан қаласы', callback_data='159t')
+inline_btn_2 = InlineKeyboardButton('Алматы қаласы', callback_data='160t')
+inline_btn_3 = InlineKeyboardButton('Шымкент қаласы', callback_data='205t')
+back = InlineKeyboardButton('⬅ Back', callback_data='⬅ Back')
+inline_kb2 = InlineKeyboardMarkup().add(inline_btn_1, inline_btn_2, inline_btn_3, back)
+
+
+inline_btn_4 = InlineKeyboardButton('Нұр-Сұлтан қаласы', callback_data='159t')
+inline_btn_5 = InlineKeyboardButton('Алматы қаласы', callback_data='160t')
+inline_btn_6 = InlineKeyboardButton('', callback_data='')
+back = InlineKeyboardButton('⬅ Back', callback_data='⬅ Back')
+inline_kb2 = InlineKeyboardMarkup().add(inline_btn_1, inline_btn_2, inline_btn_3, back)
+
 
 @dp.callback_query_handler()
 async def process_callback_btn(callback_query: types.CallbackQuery):
@@ -158,8 +171,14 @@ async def process_callback_btn(callback_query: types.CallbackQuery):
         # await bot.send_document(callback_query.message.chat.id,f)
         area = callback_query.data[:-1]
         BotDB.set_city(str(callback_query.from_user.first_name), str(area))
-        await bot.send_message(callback_query.message.chat.id, "Нұр-Сұлтан қаласы")
+        inline_btn_1 = InlineKeyboardButton('Нұр-Сұлтан қаласы', callback_data='159t')
+        inline_btn_2 = InlineKeyboardButton('Алматы қаласы', callback_data='160t')
+        inline_btn_3 = InlineKeyboardButton('Шымкент қаласы', callback_data='205t')
+        back = InlineKeyboardButton('⬅ Back', callback_data='⬅ Back')
+        inline_kb2 = InlineKeyboardMarkup().add(inline_btn_1, inline_btn_2, inline_btn_3, back)
+        await bot.send_message(callback_query.message.chat.id, "Нұр-Сұлтан қаласы",reply_markup=inline_kb2)
         print(f'For {callback_query.from_user.first_name} - added area value{area}!!!')
+
 
     elif callback_query.data == '205p':
         await bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
