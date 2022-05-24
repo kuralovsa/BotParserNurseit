@@ -1,4 +1,6 @@
 import json
+import os
+
 import pandas as pd
 import requests
 import time
@@ -6,10 +8,10 @@ import xlrd
 from pandas.io.json import json_normalize
 
 
-def parse(name: str, area: int, only_with_salary: str, experience: str, currency: str, professional_role: str,
+def parse(name: str, area: str, only_with_salary: str, experience: str, currency: str, professional_role: str,
           employment: str, schedule: str, salary: str):
     params = {
-        'text': name,  # Текст фильтра. В имени должно быть слово "Аналитик"
+          # Текст фильтра. В имени должно быть слово "Аналитик"
         'area': area,  # Поиск ощуществляется по вакансиям города area
         'only_with_salary': only_with_salary,
         'professional_role': professional_role,
@@ -22,7 +24,7 @@ def parse(name: str, area: int, only_with_salary: str, experience: str, currency
         'language': 'kz',
         'host': 'hh.kz',
         'page': 0,  # Индекс страницы поиска на HH
-        'per_page': 30  # Кол-во вакансий на 1 странице
+        'per_page': 50  # Кол-во вакансий на 1 странице
 
     }
 
@@ -53,12 +55,8 @@ def parse(name: str, area: int, only_with_salary: str, experience: str, currency
     time.sleep(0.25)
 
 
-parse(name='Web',
-      area=40,
-      only_with_salary='true',
-      experience='between1And3',
-      currency='KZT',
-      professional_role='96',
-      employment='full',
-      schedule='fullDay',
-      salary='100000')
+def close():
+    os.close()
+
+if __name__ == '__main__':
+    print('successful')
